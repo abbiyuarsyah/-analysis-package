@@ -113,9 +113,9 @@ class AnalysisChceker {
   Map<String, dynamic> scan({bool addMissingPackages = false}) {
     final hasLinterFile = hasAnalysisOptions();
     final linterRules = checkLinterRules();
-    final packages = checkPackages();
+    final analysisPackage = checkPackages();
     final missingPackages =
-        packages.where((pkg) => !packages.contains(pkg)).toList();
+        packages.where((pkg) => !analysisPackage.contains(pkg)).toList();
 
     if (addMissingPackages && missingPackages.isNotEmpty) {
       addPackages(missingPackages);
@@ -135,7 +135,7 @@ class AnalysisChceker {
     return {
       'has_analysis_options': hasLinterFile,
       'linter_rules': linterRules,
-      'linter_packages': packages,
+      'packages': packages,
       'missing_packages': missingPackages,
     };
   }
