@@ -29,7 +29,7 @@ class _AnalysisViewState extends State<AnalysisView> {
 
   @override
   Widget build(BuildContext context) {
-    final packages = linterResults['linter_packages'] as List<String>? ?? [];
+    final packages = linterResults['packages'] as List<String>? ?? [];
     missingPackages = linterResults['missing_packages'] as List<String>? ?? [];
     final rules = linterResults['linter_rules'] as Map<String, dynamic>? ?? {};
     final hasAnalysisOptions =
@@ -41,28 +41,31 @@ class _AnalysisViewState extends State<AnalysisView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const _TitleLabel(
-              icon: Icons.check_circle,
-              title: 'Packages',
-              iconColor: Colors.green,
-            ),
-            AnalysisList(packages: packages, isDetected: true),
+            HasAnalysis(hasAnalysisOptions: hasAnalysisOptions),
             const SizedBox(height: 24),
             const _TitleLabel(
               icon: Icons.warning_amber_rounded,
               title: 'Missing Packages',
               iconColor: Colors.red,
             ),
+            const SizedBox(height: 8),
             AnalysisList(packages: missingPackages, isDetected: false),
+            const SizedBox(height: 24),
+            const _TitleLabel(
+              icon: Icons.check_circle,
+              title: 'Packages',
+              iconColor: Colors.green,
+            ),
+            const SizedBox(height: 8),
+            AnalysisList(packages: packages, isDetected: true),
             const SizedBox(height: 24),
             const _TitleLabel(
               icon: Icons.rule_sharp,
               title: 'Linter Rules',
               iconColor: Colors.blue,
             ),
+            const SizedBox(height: 8),
             AnalyisRules(rules: rules),
-            const SizedBox(height: 24),
-            HasAnalysis(hasAnalysisOptions: hasAnalysisOptions),
             const SizedBox(height: 24),
             ButtonAddPackage(
               onPressed: () {
